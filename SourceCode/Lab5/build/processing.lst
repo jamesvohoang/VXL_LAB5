@@ -1,0 +1,312 @@
+ARM GAS  C:\Users\james\AppData\Local\Temp\ccx7LqS5.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"processing.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.InvokeCommand,"ax",%progbits
+  18              		.align	1
+  19              		.global	InvokeCommand
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	InvokeCommand:
+  25              	.LFB68:
+  26              		.file 1 "Core/Src/processing.c"
+   1:Core/Src/processing.c **** #include "processing.h"
+   2:Core/Src/processing.c **** 
+   3:Core/Src/processing.c **** commandTypeDef currentCommand = DO_NOTHING;
+   4:Core/Src/processing.c **** uint16_t count = 300;
+   5:Core/Src/processing.c **** 
+   6:Core/Src/processing.c **** void InvokeCommand(void)
+   7:Core/Src/processing.c **** {
+  27              		.loc 1 7 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+   8:Core/Src/processing.c ****     if(currentCommand)
+  36              		.loc 1 8 5 view .LVU1
+  37              		.loc 1 8 8 is_stmt 0 view .LVU2
+  38 0002 084B     		ldr	r3, .L5
+  39 0004 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  40              		.loc 1 8 7 view .LVU3
+  41 0006 03B9     		cbnz	r3, .L4
+  42              	.L1:
+   9:Core/Src/processing.c ****     {
+  10:Core/Src/processing.c ****         RespondSensorValue(GetSensorValue());
+  11:Core/Src/processing.c ****         count = 300;
+  12:Core/Src/processing.c ****         invokeCommandFlag = 0;
+  13:Core/Src/processing.c ****     }
+  14:Core/Src/processing.c **** }
+  43              		.loc 1 14 1 view .LVU4
+  44 0008 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\james\AppData\Local\Temp\ccx7LqS5.s 			page 2
+
+
+  45              	.L4:
+  10:Core/Src/processing.c ****         count = 300;
+  46              		.loc 1 10 9 is_stmt 1 view .LVU5
+  47 000a FFF7FEFF 		bl	GetSensorValue
+  48              	.LVL0:
+  49 000e FFF7FEFF 		bl	RespondSensorValue
+  50              	.LVL1:
+  11:Core/Src/processing.c ****         invokeCommandFlag = 0;
+  51              		.loc 1 11 9 view .LVU6
+  11:Core/Src/processing.c ****         invokeCommandFlag = 0;
+  52              		.loc 1 11 15 is_stmt 0 view .LVU7
+  53 0012 054B     		ldr	r3, .L5+4
+  54 0014 4FF49672 		mov	r2, #300
+  55 0018 1A80     		strh	r2, [r3]	@ movhi
+  12:Core/Src/processing.c ****     }
+  56              		.loc 1 12 9 is_stmt 1 view .LVU8
+  12:Core/Src/processing.c ****     }
+  57              		.loc 1 12 27 is_stmt 0 view .LVU9
+  58 001a 044B     		ldr	r3, .L5+8
+  59 001c 0022     		movs	r2, #0
+  60 001e 1A70     		strb	r2, [r3]
+  61              		.loc 1 14 1 view .LVU10
+  62 0020 F2E7     		b	.L1
+  63              	.L6:
+  64 0022 00BF     		.align	2
+  65              	.L5:
+  66 0024 00000000 		.word	.LANCHOR0
+  67 0028 00000000 		.word	.LANCHOR1
+  68 002c 00000000 		.word	invokeCommandFlag
+  69              		.cfi_endproc
+  70              	.LFE68:
+  72              		.section	.text.CheckCommand,"ax",%progbits
+  73              		.align	1
+  74              		.global	CheckCommand
+  75              		.syntax unified
+  76              		.thumb
+  77              		.thumb_func
+  79              	CheckCommand:
+  80              	.LFB69:
+  15:Core/Src/processing.c **** 
+  16:Core/Src/processing.c **** uint8_t CheckCommand(void)
+  17:Core/Src/processing.c **** {
+  81              		.loc 1 17 1 is_stmt 1 view -0
+  82              		.cfi_startproc
+  83              		@ args = 0, pretend = 0, frame = 0
+  84              		@ frame_needed = 0, uses_anonymous_args = 0
+  85              		@ link register save eliminated.
+  18:Core/Src/processing.c ****     if(isCommandTypingFlag)
+  86              		.loc 1 18 5 view .LVU12
+  87              		.loc 1 18 8 is_stmt 0 view .LVU13
+  88 0000 1A4B     		ldr	r3, .L20
+  89 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  90              		.loc 1 18 7 view .LVU14
+  91 0004 48B3     		cbz	r0, .L8
+  19:Core/Src/processing.c ****     {
+  20:Core/Src/processing.c ****         switch (buffer[1])
+  92              		.loc 1 20 9 is_stmt 1 view .LVU15
+ARM GAS  C:\Users\james\AppData\Local\Temp\ccx7LqS5.s 			page 3
+
+
+  93              		.loc 1 20 23 is_stmt 0 view .LVU16
+  94 0006 1A4B     		ldr	r3, .L20+4
+  95 0008 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+  96              		.loc 1 20 9 view .LVU17
+  97 000a 6F2B     		cmp	r3, #111
+  98 000c 1ED0     		beq	.L9
+  99 000e 0DD8     		bhi	.L10
+ 100 0010 4F2B     		cmp	r3, #79
+ 101 0012 1BD0     		beq	.L9
+ 102 0014 522B     		cmp	r3, #82
+ 103 0016 07D1     		bne	.L19
+ 104              	.L11:
+  21:Core/Src/processing.c ****         {
+  22:Core/Src/processing.c ****         case 0x52: case 0x72:
+  23:Core/Src/processing.c ****             if(buffer[2] == 0x53 || buffer[2] == 0x73)
+ 105              		.loc 1 23 13 is_stmt 1 view .LVU18
+ 106              		.loc 1 23 22 is_stmt 0 view .LVU19
+ 107 0018 154B     		ldr	r3, .L20+4
+ 108 001a 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 109              		.loc 1 23 15 view .LVU20
+ 110 001c 532B     		cmp	r3, #83
+ 111 001e 09D0     		beq	.L12
+ 112              		.loc 1 23 34 discriminator 1 view .LVU21
+ 113 0020 732B     		cmp	r3, #115
+ 114 0022 07D0     		beq	.L12
+  24:Core/Src/processing.c ****             {
+  25:Core/Src/processing.c ****                 if(buffer[3] == 0x54 || buffer[3] == 0x74)
+  26:Core/Src/processing.c ****                 {
+  27:Core/Src/processing.c ****                     currentCommand = REQUEST;
+  28:Core/Src/processing.c ****                     return 1;
+  29:Core/Src/processing.c ****                 }
+  30:Core/Src/processing.c ****             }
+  31:Core/Src/processing.c ****             break;
+  32:Core/Src/processing.c **** 
+  33:Core/Src/processing.c ****         case 0x4f: case 0x6f:
+  34:Core/Src/processing.c ****             if(buffer[2] == 0x4b || buffer[2] == 0x6b)
+  35:Core/Src/processing.c ****             {
+  36:Core/Src/processing.c ****                 currentCommand = DO_NOTHING;
+  37:Core/Src/processing.c ****                 invokeCommandFlag = 0;
+  38:Core/Src/processing.c ****                 return 1;
+  39:Core/Src/processing.c ****             }
+  40:Core/Src/processing.c ****             break;
+  41:Core/Src/processing.c ****         
+  42:Core/Src/processing.c ****         default:
+  43:Core/Src/processing.c ****             break;
+  44:Core/Src/processing.c ****         }
+  45:Core/Src/processing.c ****     }
+  46:Core/Src/processing.c **** 
+  47:Core/Src/processing.c ****     return 0;
+ 115              		.loc 1 47 12 view .LVU22
+ 116 0024 0020     		movs	r0, #0
+ 117 0026 7047     		bx	lr
+ 118              	.L19:
+  20:Core/Src/processing.c ****         {
+ 119              		.loc 1 20 9 view .LVU23
+ 120 0028 0020     		movs	r0, #0
+ 121 002a 7047     		bx	lr
+ARM GAS  C:\Users\james\AppData\Local\Temp\ccx7LqS5.s 			page 4
+
+
+ 122              	.L10:
+ 123 002c 722B     		cmp	r3, #114
+ 124 002e F3D0     		beq	.L11
+ 125 0030 0020     		movs	r0, #0
+ 126 0032 7047     		bx	lr
+ 127              	.L12:
+  25:Core/Src/processing.c ****                 {
+ 128              		.loc 1 25 17 is_stmt 1 view .LVU24
+  25:Core/Src/processing.c ****                 {
+ 129              		.loc 1 25 26 is_stmt 0 view .LVU25
+ 130 0034 0E4B     		ldr	r3, .L20+4
+ 131 0036 DB78     		ldrb	r3, [r3, #3]	@ zero_extendqisi2
+  25:Core/Src/processing.c ****                 {
+ 132              		.loc 1 25 19 view .LVU26
+ 133 0038 542B     		cmp	r3, #84
+ 134 003a 03D0     		beq	.L13
+  25:Core/Src/processing.c ****                 {
+ 135              		.loc 1 25 38 discriminator 1 view .LVU27
+ 136 003c 742B     		cmp	r3, #116
+ 137 003e 01D0     		beq	.L13
+ 138              		.loc 1 47 12 view .LVU28
+ 139 0040 0020     		movs	r0, #0
+ 140 0042 7047     		bx	lr
+ 141              	.L13:
+  27:Core/Src/processing.c ****                     return 1;
+ 142              		.loc 1 27 21 is_stmt 1 view .LVU29
+  27:Core/Src/processing.c ****                     return 1;
+ 143              		.loc 1 27 36 is_stmt 0 view .LVU30
+ 144 0044 0120     		movs	r0, #1
+ 145 0046 0B4B     		ldr	r3, .L20+8
+ 146 0048 1870     		strb	r0, [r3]
+  28:Core/Src/processing.c ****                 }
+ 147              		.loc 1 28 21 is_stmt 1 view .LVU31
+  28:Core/Src/processing.c ****                 }
+ 148              		.loc 1 28 28 is_stmt 0 view .LVU32
+ 149 004a 7047     		bx	lr
+ 150              	.L9:
+  34:Core/Src/processing.c ****             {
+ 151              		.loc 1 34 13 is_stmt 1 view .LVU33
+  34:Core/Src/processing.c ****             {
+ 152              		.loc 1 34 22 is_stmt 0 view .LVU34
+ 153 004c 084B     		ldr	r3, .L20+4
+ 154 004e 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+  34:Core/Src/processing.c ****             {
+ 155              		.loc 1 34 15 view .LVU35
+ 156 0050 4B2B     		cmp	r3, #75
+ 157 0052 03D0     		beq	.L14
+  34:Core/Src/processing.c ****             {
+ 158              		.loc 1 34 34 discriminator 1 view .LVU36
+ 159 0054 6B2B     		cmp	r3, #107
+ 160 0056 01D0     		beq	.L14
+ 161              		.loc 1 47 12 view .LVU37
+ 162 0058 0020     		movs	r0, #0
+ 163              	.L8:
+  48:Core/Src/processing.c **** }
+ 164              		.loc 1 48 1 view .LVU38
+ 165 005a 7047     		bx	lr
+ARM GAS  C:\Users\james\AppData\Local\Temp\ccx7LqS5.s 			page 5
+
+
+ 166              	.L14:
+  36:Core/Src/processing.c ****                 invokeCommandFlag = 0;
+ 167              		.loc 1 36 17 is_stmt 1 view .LVU39
+  36:Core/Src/processing.c ****                 invokeCommandFlag = 0;
+ 168              		.loc 1 36 32 is_stmt 0 view .LVU40
+ 169 005c 0023     		movs	r3, #0
+ 170 005e 054A     		ldr	r2, .L20+8
+ 171 0060 1370     		strb	r3, [r2]
+  37:Core/Src/processing.c ****                 return 1;
+ 172              		.loc 1 37 17 is_stmt 1 view .LVU41
+  37:Core/Src/processing.c ****                 return 1;
+ 173              		.loc 1 37 35 is_stmt 0 view .LVU42
+ 174 0062 054A     		ldr	r2, .L20+12
+ 175 0064 1370     		strb	r3, [r2]
+  38:Core/Src/processing.c ****             }
+ 176              		.loc 1 38 17 is_stmt 1 view .LVU43
+  38:Core/Src/processing.c ****             }
+ 177              		.loc 1 38 24 is_stmt 0 view .LVU44
+ 178 0066 0120     		movs	r0, #1
+ 179 0068 7047     		bx	lr
+ 180              	.L21:
+ 181 006a 00BF     		.align	2
+ 182              	.L20:
+ 183 006c 00000000 		.word	isCommandTypingFlag
+ 184 0070 00000000 		.word	buffer
+ 185 0074 00000000 		.word	.LANCHOR0
+ 186 0078 00000000 		.word	invokeCommandFlag
+ 187              		.cfi_endproc
+ 188              	.LFE69:
+ 190              		.global	count
+ 191              		.global	currentCommand
+ 192              		.section	.bss.currentCommand,"aw",%nobits
+ 193              		.set	.LANCHOR0,. + 0
+ 196              	currentCommand:
+ 197 0000 00       		.space	1
+ 198              		.section	.data.count,"aw"
+ 199              		.align	1
+ 200              		.set	.LANCHOR1,. + 0
+ 203              	count:
+ 204 0000 2C01     		.short	300
+ 205              		.text
+ 206              	.Letext0:
+ 207              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 208              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 209              		.file 4 "Core/Inc/transceiver.h"
+ 210              		.file 5 "Core/Inc/processing.h"
+ 211              		.file 6 "Core/Inc/sensor.h"
+ARM GAS  C:\Users\james\AppData\Local\Temp\ccx7LqS5.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 processing.c
+C:\Users\james\AppData\Local\Temp\ccx7LqS5.s:18     .text.InvokeCommand:00000000 $t
+C:\Users\james\AppData\Local\Temp\ccx7LqS5.s:24     .text.InvokeCommand:00000000 InvokeCommand
+C:\Users\james\AppData\Local\Temp\ccx7LqS5.s:66     .text.InvokeCommand:00000024 $d
+C:\Users\james\AppData\Local\Temp\ccx7LqS5.s:73     .text.CheckCommand:00000000 $t
+C:\Users\james\AppData\Local\Temp\ccx7LqS5.s:79     .text.CheckCommand:00000000 CheckCommand
+C:\Users\james\AppData\Local\Temp\ccx7LqS5.s:183    .text.CheckCommand:0000006c $d
+C:\Users\james\AppData\Local\Temp\ccx7LqS5.s:203    .data.count:00000000 count
+C:\Users\james\AppData\Local\Temp\ccx7LqS5.s:196    .bss.currentCommand:00000000 currentCommand
+C:\Users\james\AppData\Local\Temp\ccx7LqS5.s:197    .bss.currentCommand:00000000 $d
+C:\Users\james\AppData\Local\Temp\ccx7LqS5.s:199    .data.count:00000000 $d
+
+UNDEFINED SYMBOLS
+GetSensorValue
+RespondSensorValue
+invokeCommandFlag
+isCommandTypingFlag
+buffer

@@ -1,0 +1,383 @@
+ARM GAS  C:\Users\james\AppData\Local\Temp\cceGn6qg.s 			page 1
+
+
+   1              		.cpu cortex-m3
+   2              		.arch armv7-m
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"transceiver.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.TransceiverInit,"ax",%progbits
+  18              		.align	1
+  19              		.global	TransceiverInit
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	TransceiverInit:
+  25              	.LFB68:
+  26              		.file 1 "Core/Src/transceiver.c"
+   1:Core/Src/transceiver.c **** #include "transceiver.h"
+   2:Core/Src/transceiver.c **** 
+   3:Core/Src/transceiver.c **** extern UART_HandleTypeDef huart1;
+   4:Core/Src/transceiver.c **** 
+   5:Core/Src/transceiver.c **** uint8_t buffer[MAX_BUFFER_SIZE] = {0};
+   6:Core/Src/transceiver.c **** uint8_t temp = 0;
+   7:Core/Src/transceiver.c **** uint8_t bufferIndex = 0;
+   8:Core/Src/transceiver.c **** 
+   9:Core/Src/transceiver.c **** uint8_t isCommandTypingFlag = 0;
+  10:Core/Src/transceiver.c **** uint8_t invokeCommandFlag = 0;
+  11:Core/Src/transceiver.c **** 
+  12:Core/Src/transceiver.c **** void TransceiverInit(void)
+  13:Core/Src/transceiver.c **** {
+  27              		.loc 1 13 1 view -0
+  28              		.cfi_startproc
+  29              		@ args = 0, pretend = 0, frame = 0
+  30              		@ frame_needed = 0, uses_anonymous_args = 0
+  31 0000 08B5     		push	{r3, lr}
+  32              	.LCFI0:
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 3, -8
+  35              		.cfi_offset 14, -4
+  14:Core/Src/transceiver.c ****     HAL_UART_Receive_IT(&huart1, &temp, 1);
+  36              		.loc 1 14 5 view .LVU1
+  37 0002 0122     		movs	r2, #1
+  38 0004 0249     		ldr	r1, .L3
+  39 0006 0348     		ldr	r0, .L3+4
+  40 0008 FFF7FEFF 		bl	HAL_UART_Receive_IT
+  41              	.LVL0:
+  15:Core/Src/transceiver.c **** }
+  42              		.loc 1 15 1 is_stmt 0 view .LVU2
+  43 000c 08BD     		pop	{r3, pc}
+ARM GAS  C:\Users\james\AppData\Local\Temp\cceGn6qg.s 			page 2
+
+
+  44              	.L4:
+  45 000e 00BF     		.align	2
+  46              	.L3:
+  47 0010 00000000 		.word	.LANCHOR0
+  48 0014 00000000 		.word	huart1
+  49              		.cfi_endproc
+  50              	.LFE68:
+  52              		.section	.rodata.RespondSensorValue.str1.4,"aMS",%progbits,1
+  53              		.align	2
+  54              	.LC0:
+  55 0000 0A214144 		.ascii	"\012!ADC=%ld#\012\000"
+  55      433D256C 
+  55      64230A00 
+  56              		.section	.text.RespondSensorValue,"ax",%progbits
+  57              		.align	1
+  58              		.global	RespondSensorValue
+  59              		.syntax unified
+  60              		.thumb
+  61              		.thumb_func
+  63              	RespondSensorValue:
+  64              	.LVL1:
+  65              	.LFB69:
+  16:Core/Src/transceiver.c **** 
+  17:Core/Src/transceiver.c **** void RespondSensorValue(uint32_t value)
+  18:Core/Src/transceiver.c **** {
+  66              		.loc 1 18 1 is_stmt 1 view -0
+  67              		.cfi_startproc
+  68              		@ args = 0, pretend = 0, frame = 32
+  69              		@ frame_needed = 0, uses_anonymous_args = 0
+  70              		.loc 1 18 1 is_stmt 0 view .LVU4
+  71 0000 00B5     		push	{lr}
+  72              	.LCFI1:
+  73              		.cfi_def_cfa_offset 4
+  74              		.cfi_offset 14, -4
+  75 0002 89B0     		sub	sp, sp, #36
+  76              	.LCFI2:
+  77              		.cfi_def_cfa_offset 40
+  78 0004 0246     		mov	r2, r0
+  19:Core/Src/transceiver.c ****     char temp[MAX_BUFFER_SIZE];
+  79              		.loc 1 19 5 is_stmt 1 view .LVU5
+  20:Core/Src/transceiver.c ****     int size = sprintf(temp, "\n!ADC=%ld#\n", value);
+  80              		.loc 1 20 5 view .LVU6
+  81              		.loc 1 20 16 is_stmt 0 view .LVU7
+  82 0006 0749     		ldr	r1, .L7
+  83 0008 6846     		mov	r0, sp
+  84              	.LVL2:
+  85              		.loc 1 20 16 view .LVU8
+  86 000a FFF7FEFF 		bl	sprintf
+  87              	.LVL3:
+  21:Core/Src/transceiver.c ****     HAL_UART_Transmit(&huart1, (uint8_t *)temp, size, 1000);
+  88              		.loc 1 21 5 is_stmt 1 view .LVU9
+  89 000e 4FF47A73 		mov	r3, #1000
+  90 0012 82B2     		uxth	r2, r0
+  91 0014 6946     		mov	r1, sp
+  92 0016 0448     		ldr	r0, .L7+4
+  93              	.LVL4:
+  94              		.loc 1 21 5 is_stmt 0 view .LVU10
+ARM GAS  C:\Users\james\AppData\Local\Temp\cceGn6qg.s 			page 3
+
+
+  95 0018 FFF7FEFF 		bl	HAL_UART_Transmit
+  96              	.LVL5:
+  22:Core/Src/transceiver.c **** }
+  97              		.loc 1 22 1 view .LVU11
+  98 001c 09B0     		add	sp, sp, #36
+  99              	.LCFI3:
+ 100              		.cfi_def_cfa_offset 4
+ 101              		@ sp needed
+ 102 001e 5DF804FB 		ldr	pc, [sp], #4
+ 103              	.L8:
+ 104 0022 00BF     		.align	2
+ 105              	.L7:
+ 106 0024 00000000 		.word	.LC0
+ 107 0028 00000000 		.word	huart1
+ 108              		.cfi_endproc
+ 109              	.LFE69:
+ 111              		.section	.text.HAL_UART_RxCpltCallback,"ax",%progbits
+ 112              		.align	1
+ 113              		.global	HAL_UART_RxCpltCallback
+ 114              		.syntax unified
+ 115              		.thumb
+ 116              		.thumb_func
+ 118              	HAL_UART_RxCpltCallback:
+ 119              	.LVL6:
+ 120              	.LFB70:
+  23:Core/Src/transceiver.c **** 
+  24:Core/Src/transceiver.c **** void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+  25:Core/Src/transceiver.c **** {
+ 121              		.loc 1 25 1 is_stmt 1 view -0
+ 122              		.cfi_startproc
+ 123              		@ args = 0, pretend = 0, frame = 0
+ 124              		@ frame_needed = 0, uses_anonymous_args = 0
+ 125              		.loc 1 25 1 is_stmt 0 view .LVU13
+ 126 0000 08B5     		push	{r3, lr}
+ 127              	.LCFI4:
+ 128              		.cfi_def_cfa_offset 8
+ 129              		.cfi_offset 3, -8
+ 130              		.cfi_offset 14, -4
+  26:Core/Src/transceiver.c ****   if(huart->Instance == USART1)
+ 131              		.loc 1 26 3 is_stmt 1 view .LVU14
+ 132              		.loc 1 26 11 is_stmt 0 view .LVU15
+ 133 0002 0268     		ldr	r2, [r0]
+ 134              		.loc 1 26 5 view .LVU16
+ 135 0004 144B     		ldr	r3, .L18
+ 136 0006 9A42     		cmp	r2, r3
+ 137 0008 00D0     		beq	.L16
+ 138              	.LVL7:
+ 139              	.L9:
+  27:Core/Src/transceiver.c ****   {
+  28:Core/Src/transceiver.c ****     switch (temp)
+  29:Core/Src/transceiver.c ****     {
+  30:Core/Src/transceiver.c ****     case 0x21:
+  31:Core/Src/transceiver.c ****       bufferIndex = 0;
+  32:Core/Src/transceiver.c ****       isCommandTypingFlag = 1;
+  33:Core/Src/transceiver.c ****       break;
+  34:Core/Src/transceiver.c **** 
+  35:Core/Src/transceiver.c ****     case 0x23:
+ARM GAS  C:\Users\james\AppData\Local\Temp\cceGn6qg.s 			page 4
+
+
+  36:Core/Src/transceiver.c ****       isCommandTypingFlag = 0;
+  37:Core/Src/transceiver.c ****       invokeCommandFlag = 1;
+  38:Core/Src/transceiver.c ****       break;
+  39:Core/Src/transceiver.c ****     
+  40:Core/Src/transceiver.c ****     default:
+  41:Core/Src/transceiver.c ****       break;
+  42:Core/Src/transceiver.c ****     }
+  43:Core/Src/transceiver.c **** 
+  44:Core/Src/transceiver.c ****     buffer[bufferIndex] = temp;
+  45:Core/Src/transceiver.c ****     bufferIndex++;
+  46:Core/Src/transceiver.c ****     if(bufferIndex == MAX_BUFFER_SIZE)
+  47:Core/Src/transceiver.c ****       bufferIndex = 0;
+  48:Core/Src/transceiver.c **** 
+  49:Core/Src/transceiver.c ****     HAL_UART_Receive_IT(&huart1, &temp, 1);
+  50:Core/Src/transceiver.c ****   }
+  51:Core/Src/transceiver.c **** }...
+ 140              		.loc 1 51 1 view .LVU17
+ 141 000a 08BD     		pop	{r3, pc}
+ 142              	.LVL8:
+ 143              	.L16:
+  28:Core/Src/transceiver.c ****     switch (temp)
+ 144              		.loc 1 28 5 is_stmt 1 view .LVU18
+ 145 000c 134B     		ldr	r3, .L18+4
+ 146 000e 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 147 0010 212A     		cmp	r2, #33
+ 148 0012 10D0     		beq	.L11
+ 149 0014 232A     		cmp	r2, #35
+ 150 0016 15D0     		beq	.L12
+ 151              	.L13:
+  44:Core/Src/transceiver.c ****     buffer[bufferIndex] = temp;
+ 152              		.loc 1 44 5 view .LVU19
+  44:Core/Src/transceiver.c ****     buffer[bufferIndex] = temp;
+ 153              		.loc 1 44 11 is_stmt 0 view .LVU20
+ 154 0018 1149     		ldr	r1, .L18+8
+ 155 001a 0B78     		ldrb	r3, [r1]	@ zero_extendqisi2
+  44:Core/Src/transceiver.c ****     buffer[bufferIndex] = temp;
+ 156              		.loc 1 44 25 view .LVU21
+ 157 001c 1148     		ldr	r0, .L18+12
+ 158              	.LVL9:
+  44:Core/Src/transceiver.c ****     buffer[bufferIndex] = temp;
+ 159              		.loc 1 44 25 view .LVU22
+ 160 001e C254     		strb	r2, [r0, r3]
+  45:Core/Src/transceiver.c ****     bufferIndex++;
+ 161              		.loc 1 45 5 is_stmt 1 view .LVU23
+  45:Core/Src/transceiver.c ****     bufferIndex++;
+ 162              		.loc 1 45 16 is_stmt 0 view .LVU24
+ 163 0020 0133     		adds	r3, r3, #1
+ 164 0022 DBB2     		uxtb	r3, r3
+ 165 0024 0B70     		strb	r3, [r1]
+  46:Core/Src/transceiver.c ****     if(bufferIndex == MAX_BUFFER_SIZE)
+ 166              		.loc 1 46 5 is_stmt 1 view .LVU25
+  46:Core/Src/transceiver.c ****     if(bufferIndex == MAX_BUFFER_SIZE)
+ 167              		.loc 1 46 7 is_stmt 0 view .LVU26
+ 168 0026 1E2B     		cmp	r3, #30
+ 169 0028 13D0     		beq	.L17
+ 170              	.L14:
+  49:Core/Src/transceiver.c ****     HAL_UART_Receive_IT(&huart1, &temp, 1);
+ARM GAS  C:\Users\james\AppData\Local\Temp\cceGn6qg.s 			page 5
+
+
+ 171              		.loc 1 49 5 is_stmt 1 view .LVU27
+ 172 002a 0122     		movs	r2, #1
+ 173 002c 0B49     		ldr	r1, .L18+4
+ 174 002e 0E48     		ldr	r0, .L18+16
+ 175 0030 FFF7FEFF 		bl	HAL_UART_Receive_IT
+ 176              	.LVL10:
+ 177              		.loc 1 51 1 is_stmt 0 view .LVU28
+ 178 0034 E9E7     		b	.L9
+ 179              	.LVL11:
+ 180              	.L11:
+  31:Core/Src/transceiver.c ****       bufferIndex = 0;
+ 181              		.loc 1 31 7 is_stmt 1 view .LVU29
+  31:Core/Src/transceiver.c ****       bufferIndex = 0;
+ 182              		.loc 1 31 19 is_stmt 0 view .LVU30
+ 183 0036 0A4B     		ldr	r3, .L18+8
+ 184 0038 0021     		movs	r1, #0
+ 185 003a 1970     		strb	r1, [r3]
+  32:Core/Src/transceiver.c ****       isCommandTypingFlag = 1;
+ 186              		.loc 1 32 7 is_stmt 1 view .LVU31
+  32:Core/Src/transceiver.c ****       isCommandTypingFlag = 1;
+ 187              		.loc 1 32 27 is_stmt 0 view .LVU32
+ 188 003c 0B4B     		ldr	r3, .L18+20
+ 189 003e 0121     		movs	r1, #1
+ 190 0040 1970     		strb	r1, [r3]
+  33:Core/Src/transceiver.c ****       break;
+ 191              		.loc 1 33 7 is_stmt 1 view .LVU33
+ 192 0042 E9E7     		b	.L13
+ 193              	.L12:
+  36:Core/Src/transceiver.c ****       isCommandTypingFlag = 0;
+ 194              		.loc 1 36 7 view .LVU34
+  36:Core/Src/transceiver.c ****       isCommandTypingFlag = 0;
+ 195              		.loc 1 36 27 is_stmt 0 view .LVU35
+ 196 0044 094B     		ldr	r3, .L18+20
+ 197 0046 0021     		movs	r1, #0
+ 198 0048 1970     		strb	r1, [r3]
+  37:Core/Src/transceiver.c ****       invokeCommandFlag = 1;
+ 199              		.loc 1 37 7 is_stmt 1 view .LVU36
+  37:Core/Src/transceiver.c ****       invokeCommandFlag = 1;
+ 200              		.loc 1 37 25 is_stmt 0 view .LVU37
+ 201 004a 094B     		ldr	r3, .L18+24
+ 202 004c 0121     		movs	r1, #1
+ 203 004e 1970     		strb	r1, [r3]
+  38:Core/Src/transceiver.c ****       break;
+ 204              		.loc 1 38 7 is_stmt 1 view .LVU38
+ 205 0050 E2E7     		b	.L13
+ 206              	.LVL12:
+ 207              	.L17:
+  47:Core/Src/transceiver.c ****       bufferIndex = 0;
+ 208              		.loc 1 47 7 view .LVU39
+  47:Core/Src/transceiver.c ****       bufferIndex = 0;
+ 209              		.loc 1 47 19 is_stmt 0 view .LVU40
+ 210 0052 0022     		movs	r2, #0
+ 211 0054 0A70     		strb	r2, [r1]
+ 212 0056 E8E7     		b	.L14
+ 213              	.L19:
+ 214              		.align	2
+ 215              	.L18:
+ARM GAS  C:\Users\james\AppData\Local\Temp\cceGn6qg.s 			page 6
+
+
+ 216 0058 00380140 		.word	1073821696
+ 217 005c 00000000 		.word	.LANCHOR0
+ 218 0060 00000000 		.word	.LANCHOR1
+ 219 0064 00000000 		.word	.LANCHOR4
+ 220 0068 00000000 		.word	huart1
+ 221 006c 00000000 		.word	.LANCHOR2
+ 222 0070 00000000 		.word	.LANCHOR3
+ 223              		.cfi_endproc
+ 224              	.LFE70:
+ 226              		.global	invokeCommandFlag
+ 227              		.global	isCommandTypingFlag
+ 228              		.global	bufferIndex
+ 229              		.global	temp
+ 230              		.global	buffer
+ 231              		.section	.bss.buffer,"aw",%nobits
+ 232              		.align	2
+ 233              		.set	.LANCHOR4,. + 0
+ 236              	buffer:
+ 237 0000 00000000 		.space	30
+ 237      00000000 
+ 237      00000000 
+ 237      00000000 
+ 237      00000000 
+ 238              		.section	.bss.bufferIndex,"aw",%nobits
+ 239              		.set	.LANCHOR1,. + 0
+ 242              	bufferIndex:
+ 243 0000 00       		.space	1
+ 244              		.section	.bss.invokeCommandFlag,"aw",%nobits
+ 245              		.set	.LANCHOR3,. + 0
+ 248              	invokeCommandFlag:
+ 249 0000 00       		.space	1
+ 250              		.section	.bss.isCommandTypingFlag,"aw",%nobits
+ 251              		.set	.LANCHOR2,. + 0
+ 254              	isCommandTypingFlag:
+ 255 0000 00       		.space	1
+ 256              		.section	.bss.temp,"aw",%nobits
+ 257              		.set	.LANCHOR0,. + 0
+ 260              	temp:
+ 261 0000 00       		.space	1
+ 262              		.text
+ 263              	.Letext0:
+ 264              		.file 2 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 265              		.file 3 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ 266              		.file 4 "Drivers/CMSIS/Device/ST/STM32F1xx/Include/stm32f103x6.h"
+ 267              		.file 5 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h"
+ 268              		.file 6 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_dma.h"
+ 269              		.file 7 "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h"
+ 270              		.file 8 "Core/Inc/transceiver.h"
+ 271              		.file 9 "c:\\program files (x86)\\gnu arm embedded toolchain\\10 2021.10\\arm-none-eabi\\include\\
+ARM GAS  C:\Users\james\AppData\Local\Temp\cceGn6qg.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 transceiver.c
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:18     .text.TransceiverInit:00000000 $t
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:24     .text.TransceiverInit:00000000 TransceiverInit
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:47     .text.TransceiverInit:00000010 $d
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:53     .rodata.RespondSensorValue.str1.4:00000000 $d
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:57     .text.RespondSensorValue:00000000 $t
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:63     .text.RespondSensorValue:00000000 RespondSensorValue
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:106    .text.RespondSensorValue:00000024 $d
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:112    .text.HAL_UART_RxCpltCallback:00000000 $t
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:118    .text.HAL_UART_RxCpltCallback:00000000 HAL_UART_RxCpltCallback
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:216    .text.HAL_UART_RxCpltCallback:00000058 $d
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:248    .bss.invokeCommandFlag:00000000 invokeCommandFlag
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:254    .bss.isCommandTypingFlag:00000000 isCommandTypingFlag
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:242    .bss.bufferIndex:00000000 bufferIndex
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:260    .bss.temp:00000000 temp
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:236    .bss.buffer:00000000 buffer
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:232    .bss.buffer:00000000 $d
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:243    .bss.bufferIndex:00000000 $d
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:249    .bss.invokeCommandFlag:00000000 $d
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:255    .bss.isCommandTypingFlag:00000000 $d
+C:\Users\james\AppData\Local\Temp\cceGn6qg.s:261    .bss.temp:00000000 $d
+
+UNDEFINED SYMBOLS
+HAL_UART_Receive_IT
+huart1
+sprintf
+HAL_UART_Transmit
